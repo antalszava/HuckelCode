@@ -6,7 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fopenmp")
 
 set(BLAS_DIR /usr/lib/)
 find_package(BLAS REQUIRED)
-set(LAPACK_DIR //usr/lib/)
+set(LAPACK_DIR /usr/lib/)
 find_package(LAPACK REQUIRED)
 
 # Source files
