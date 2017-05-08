@@ -1,0 +1,3 @@
+/home/toncsi/ClionProjects/input_pdb/include/openbabel/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/toncsi/ClionProjects/input_pdb/include/openbabel/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/toncsi/ClionProjects/input_pdb/include/openbabel/cmake-build-debug/CMakeFiles/openbabel.dir
