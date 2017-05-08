@@ -8,7 +8,7 @@ int main(int argc, char** argv)
         //Check number of arguments given by the user
         if(argc < 3)
         {
-            ErrorHandler::invalidNumberOfArguments(argc);
+            ErrorHandler::invalidNumberOfArguments();
             return EXIT_FAILURE;
         }
 

@@ -9,7 +9,7 @@
 
 namespace ErrorHandler {
     //Handling error of unknown filename
-    extern void invalidNumberOfArguments(int numberOfArguments);
+    extern void invalidNumberOfArguments();
 
     //Handling error of unknown formats given for OpenBabel
     extern void notAvailableFormats(const char * inputFormat, const char * outputFormat);

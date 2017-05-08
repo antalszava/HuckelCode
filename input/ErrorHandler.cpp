@@ -4,7 +4,7 @@
 //
 // Created by toncsi on 2017.05.01..
 //
-void ErrorHandler::invalidNumberOfArguments(int numberOfArguments)
+void ErrorHandler::invalidNumberOfArguments()
 {
     std::cerr << "Please provide two filenames: one for your molecule file and one for your configuration file."  << std::endl;
 }
