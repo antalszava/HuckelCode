@@ -15,12 +15,14 @@ int OpenBabelUtils::convert()
         //Opening input file
         if(initInputFile(inputFileName))
         {
+            ErrorHandler::inputFileNotOpen(inputFileName);
             return EXIT_FAILURE;
         }
 
         //Opening output file
         if(initOutPutFile(pdbFileName))
         {
+            ErrorHandler::outputFileNotOpen();
             return EXIT_FAILURE;
         }
         return OpenBabelConversion();

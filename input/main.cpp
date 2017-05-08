@@ -5,9 +5,10 @@
 
 int main(int argc, char** argv)
 {
-        //Check number of arguments given by user
-        if(ErrorHandler::checkNumberOfArguments(argc))
+        //Check number of arguments given by the user
+        if(argc < 3)
         {
+            ErrorHandler::invalidNumberOfArguments(argc);
             return EXIT_FAILURE;
         }
 

@@ -4,14 +4,9 @@
 //
 // Created by toncsi on 2017.05.01..
 //
-int ErrorHandler::checkNumberOfArguments(int numberOfArguments)
+void ErrorHandler::invalidNumberOfArguments(int numberOfArguments)
 {
-    if(numberOfArguments < 3)
-    {
-        std::cerr << "Please provide two filenames: one for your molecule file and one for your configuration file."  << std::endl;
-        return EXIT_FAILURE;
-    }
-    return EXIT_SUCCESS;
+    std::cerr << "Please provide two filenames: one for your molecule file and one for your configuration file."  << std::endl;
 }
 
 void ErrorHandler::notAvailableFormats(const char * inputFormat, const char * outputFormat)
