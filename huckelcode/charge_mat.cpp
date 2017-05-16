@@ -74,7 +74,7 @@ void eval_charge_matrix(cell_type *cell,eigenset_type eigenset,hermetian_matrix_
 {
   int num_atoms;
   int i,j,k,l;
-  int itab,jtab,ktab;
+  long itab,jtab,ktab;
   int start_orb,end_orb;
   int electrons_done,num_electrons;
   int top_of_degeneracy;

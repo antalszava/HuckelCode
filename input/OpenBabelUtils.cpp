@@ -1,7 +1,3 @@
-//
-// Created by toncsi on 2017.05.01..
-//
-
 #include "OpenBabelUtils.h"
 #include "ErrorHandler.h"
 
@@ -11,18 +7,17 @@ int OpenBabelUtils::convert()
     obtainInputFileFormat();
 
     //if already PDB, just leave it
-    if (inputFileFormat != "PDB") {
+    if (inputFileFormat != "PDB")
+    {
         //Opening input file
         if(initInputFile(inputFileName))
         {
-            ErrorHandler::inputFileNotOpen(inputFileName);
             return EXIT_FAILURE;
         }
 
         //Opening output file
         if(initOutPutFile(pdbFileName))
         {
-            ErrorHandler::outputFileNotOpen();
             return EXIT_FAILURE;
         }
         return OpenBabelConversion();
@@ -34,7 +29,7 @@ int OpenBabelUtils::initInputFile(std::string filename)
 {
     inputFile.open(filename);
     if (!inputFile.is_open()) {
-        ErrorHandler::inputFileNotOpen();
+        ErrorHandler::openBabelInputFileNotOpen(filename);
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
@@ -44,7 +39,7 @@ int OpenBabelUtils::initOutPutFile(std::string filename)
 {
     outputFile.open(filename);
     if (!outputFile.is_open()) {
-        ErrorHandler::inputFileNotOpen();
+        ErrorHandler::openBabelOutputFileNotOpen();
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
@@ -63,11 +58,14 @@ int OpenBabelUtils::OpenBabelConversion()
         ErrorHandler::notAvailableFormats(iFileFormat,oFileFormat);
         return EXIT_FAILURE;
     }
-    int n = conv.Convert();
-    std::cout << n << " molecules converted" << std::endl;
-    inputFile.close();
-    outputFile.close();
-    return EXIT_SUCCESS;
+    else
+    {
+        int n = conv.Convert();
+        std::cout << n << " molecules converted" << std::endl;
+        inputFile.close();
+        outputFile.close();
+        return EXIT_SUCCESS;
+    }
 };
 
 void OpenBabelUtils::obtainInputFileFormat()
@@ -76,7 +74,7 @@ void OpenBabelUtils::obtainInputFileFormat()
     auto const pos = inputFileName.find_last_of('.');
     inputFileFormat = inputFileName.substr(pos + 1);
 
-    //Opening output file
+    //Creating output filename
     pdbFileName = inputFileName.substr(0, pos);
     pdbFileName.append(".pdb");
     //Converting format to uppercase so that it conforms to OpenBabel syntax
@@ -87,4 +85,12 @@ void OpenBabelUtils::obtainInputFileFormat()
 
 const std::string &OpenBabelUtils::getPdbFileName() const {
     return pdbFileName;
+}
+
+const std::string &OpenBabelUtils::getInputFileName() const {
+    return inputFileName;
+}
+
+const std::string &OpenBabelUtils::getOutputFileName() const {
+    return outputFileName;
 }

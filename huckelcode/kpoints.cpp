@@ -108,8 +108,8 @@ void loop_over_k_points(cell_type *cell, detail_type *details, hermetian_matrix_
     k_point_type *kpoint;
     real *mat_save;
     int i, j, k, l, m;
-    int itab, jtab, ktab;
-    int ltab, mtab;
+    long itab, jtab, ktab;
+    long ltab, mtab;
     int diag_error;
     real temp;
     real total_energy, tot_chg;
@@ -255,38 +255,29 @@ void loop_over_k_points(cell_type *cell, detail_type *details, hermetian_matrix_
             }
             dump_hermetian_mat(overlap_file, overlapK.mat, num_orbs);
         }
-
-        if (details->dump_sparse_mats) {
+        if (details->dump_sparse_mm_mats) {
 /* do we need to open the sparse matrix files? */
             if (i == 0) {
                 sprintf(tempfilename, "%s.SPARSE.MM.OV", details->filename);
                 dump_sparse_mat_matrix_market(tempfilename, 1e-08, overlapK.mat, num_orbs);
 
+                sprintf(tempfilename, "%s.SPARSE.MM.HAM", details->filename);
+                dump_sparse_mat_matrix_market(tempfilename, 1e-08, hamilK.mat, num_orbs);
+            }
+        }
+        if (details->dump_sparse_mats) {
+/* do we need to open the sparse matrix files? */
+            if (i == 0) {
                 sprintf(tempfilename, "%s.SPARSE.OV", details->filename);
                 dump_sparse_mat(tempfilename, 1e-08, overlapK.mat, num_orbs);
 
-                sprintf(tempfilename, "%s.SPARSE.MM.HAM", details->filename);
-                dump_sparse_mat_matrix_market(tempfilename, 1e-08, overlapK.mat, num_orbs);
-
                 sprintf(tempfilename, "%s.SPARSE.HAM", details->filename);
-                dump_sparse_mat(tempfilename, 1e-08, overlapK.mat, num_orbs);
+                dump_sparse_mat(tempfilename, 1e-08, hamilK.mat, num_orbs);
             }
-            /*
-
-                sparse_OVfile = fopen(, "w+");
-                if (!sparse_OVfile) fatal("Can't open .SPARSE.OV file!\n");
-                sprintf(tempfilename, "%s.SPARSE.HAM", details->filename);
-                sparse_HAMfile = fopen(tempfilename, "w+");
-                dump_sparse_mat_matrix_market(tempfilename, overlapK.mat, num_orbs, 1e-08);
-                if (!sparse_HAMfile) fatal("Can't open .SPARSE.HAM file!\n");
-
-            dump_sparse_mat(sparse_OVfile, overlapK.mat, num_orbs, 1e-08);
-            dump_sparse_mat(sparse_HAMfile, hamilK.mat, num_orbs, 1e-08);
-             */
         }
 
         if (details->dump_hamil) {
-/* if this is the first call, the open the file */
+/* if this is the first call, then open the file */
             if (i == 0) {
                 sprintf(tempfilename, "%s.HAM", details->filename);
 #ifndef USING_THE_MAC
@@ -345,9 +336,6 @@ void loop_over_k_points(cell_type *cell, detail_type *details, hermetian_matrix_
             if (details->hamil_PRT) {
                 bcopy((char *) hamilK.mat, (char *) eigenset.vectR, num_orbs * num_orbs * sizeof(real));
             }
-            clock_t end2 = clock();
-            double elapsed_secs = double(end2 - begin) / CLOCKS_PER_SEC;
-            std::cout << "Cboris hivas elott loop_over_k_points fuggvenyben: " << elapsed_secs << std::endl;
 /*******
   now diagonalize that beast by calling the FORTRAN subroutine used
   to diagonalize stuff in new3 and CACAO.
@@ -373,9 +361,6 @@ void loop_over_k_points(cell_type *cell, detail_type *details, hermetian_matrix_
                   case 1645: fprintf(stderr,"More Helices?"); break;
                   }
 #endif
-            clock_t end7 = clock();
-            elapsed_secs = double(end7 - begin) / CLOCKS_PER_SEC;
-            std::cout << "Cboris hivas utan loop_over_k_points fuggvenyben: " << elapsed_secs << std::endl;
 
 
 /*********
@@ -399,10 +384,6 @@ void loop_over_k_points(cell_type *cell, detail_type *details, hermetian_matrix_
                     we're using LAPACK to diagonalize and we need to copy the matrices into those
                     used by the LAPACK diagonalizer
                     **********/
-
-            clock_t end3 = clock();
-            double elapsed_secs = double(end3 - begin) / CLOCKS_PER_SEC;
-            std::cout << "Mx copy elott: " << elapsed_secs << std::endl;
                   for(j=0;j<num_orbs;j++){
                     jtab = j*num_orbs;
                     for(k=j+1;k<num_orbs;k++){
@@ -422,10 +403,6 @@ void loop_over_k_points(cell_type *cell, detail_type *details, hermetian_matrix_
                     cmplx_overlap[jtab+j].i = 0.0;
 
                   }
-            end3 = clock();
-            elapsed_secs = double(end3 - begin) / CLOCKS_PER_SEC;
-            std::cout << "Mx copy utan: " << elapsed_secs << std::endl;
-
                   itype = 1;
                   if( details->just_avgE ){
                     jobz = 'N';
@@ -438,9 +415,6 @@ void loop_over_k_points(cell_type *cell, detail_type *details, hermetian_matrix_
                   num_orbs2 = num_orbs*num_orbs;
                   if( print_progress )
                     fprintf(stdout,"{");
-            end3 = clock();
-            elapsed_secs = double(end3 - begin) / CLOCKS_PER_SEC;
-            std::cout << "zhegv elott: " << elapsed_secs << std::endl;
                   if(!details->diag_wo_overlap){
                     zhegv((long *)&(itype),&jobz,&uplo,(long *)&num_orbs,cmplx_hamil,
                                             (long *)&num_orbs,cmplx_overlap,
@@ -451,9 +425,6 @@ void loop_over_k_points(cell_type *cell, detail_type *details, hermetian_matrix_
                           eigenset.val,cmplx_work,(long *)&num_orbs2,work3,
                           (long *)&diag_error);
                   }
-            end3 = clock();
-            elapsed_secs = double(end3 - begin) / CLOCKS_PER_SEC;
-            std::cout << "zhegv utan    : " << elapsed_secs << std::endl;
                   if( print_progress )
                     fprintf(stdout,"}");
 

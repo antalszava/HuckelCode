@@ -102,31 +102,22 @@ void cboris(int *n,int *nd,real *a,real *b,real *c,real *d,
     /* Function Body */
     *fail = 1;
 
-    clock_t end1 = clock();
-    double elapsed_secs = double(end1 - begin)/ CLOCKS_PER_SEC;
-    std::cout << "Cchol fuggveny (Choleski) elott cboris fuggvenyben: " << elapsed_secs << std::endl;
     // Cholesky decomposition on matrix B
     cchol(n, nd, &b[b_offset], &lf);
     if (lf != 0) {
         return;
     }
 
-    clock_t end2 = clock();
-    elapsed_secs = double(end2 - begin)/ CLOCKS_PER_SEC;
-    std::cout << "Cchol fuggveny (Choleski) utan cboris fuggvenyben: " << elapsed_secs << std::endl;
 
 /* MOVE MATRIX A */
 
     i__1 = *n;
 
-    //#pragma omp parallel for
     for (int i = 1; i <= i__1; ++i) {
         c[i + i * c_dim1] = 0.;
     }
 
-    //#pragma omp parallel
     for (int i = 2; i <= i__1; ++i) {
-        //#pragma omp for
         for (int j = 1; j < i; ++j) {
             c[i + j * c_dim1] = a[j + i * a_dim1];
             c[j + i * c_dim1] = -a[j + i * a_dim1];
@@ -137,9 +128,7 @@ void cboris(int *n,int *nd,real *a,real *b,real *c,real *d,
 /*  COMPUTE (L(-1)*A) */
 
     i__1 = *n;
-    //#pragma omp parallel
     for (int j = 1; j <= i__1; ++j) {
-        //#pragma omp for
         for (int i = 2; i <= i__1; ++i) {
             for (int k = 1; k < i; ++k) {
                 a[i + j * a_dim1] = a[i + j * a_dim1] - a[k + j * a_dim1] * b[i + k * b_dim1] +
@@ -150,9 +139,7 @@ void cboris(int *n,int *nd,real *a,real *b,real *c,real *d,
         }
     }
 
-    //#pragma omp parallel
     for (int j = 1; j <= i__1; ++j) {
-        //#pragma omp for
         for (int i = 2; i <= i__1; ++i) {
             a[i + j * a_dim1] /= b[i + i * b_dim1];
             c[i + j * c_dim1] /= b[i + i * b_dim1];
@@ -194,7 +181,6 @@ void cboris(int *n,int *nd,real *a,real *b,real *c,real *d,
         }
         ia = i + 1;
         i__2 = *n;
-        //#pragma omp parallel for
         for (int j = ia; j <= i__2; ++j) {
 /* L40: */
             a[i + j * a_dim1] = c[j + i * c_dim1];
@@ -202,35 +188,15 @@ void cboris(int *n,int *nd,real *a,real *b,real *c,real *d,
         L41:
         ;
     }
-    double end3 = omp_get_wtime();
-    elapsed_secs = double(end3 - begin);
-    std::cout << j << " 'A' matrix osszerakasa utan: " << elapsed_secs << std::endl;
 
 /*     DIAGONALIZE A */
 
     *fail = 2;
     ctred2(n, nd, &a[a_offset], &c[c_offset], &d[1], &e[1], &f[1]);
 
-
-    double end4 = omp_get_wtime();
-    elapsed_secs = double(end4 - begin);
-    std::cout << j << " ctred2 fuggveny utan (omp): " << elapsed_secs << std::endl;
-
-    clock_t end10 = clock();
-    elapsed_secs = double(end10 - begin)/ CLOCKS_PER_SEC;
-    std::cout << " ctred2 fuggveny utan (clock):" << elapsed_secs << std::endl;
-
     ctql2(n, nd, &d[1], &e[1], &f[1], &a[a_offset], &c[c_offset], &lf);
 
 
-    double end5 = omp_get_wtime();
-    elapsed_secs = double(end5 - begin);
-    std::cout << j << " ctql2 fuggveny utan: " << elapsed_secs << std::endl;
-
-
-    clock_t end11 = clock();
-    elapsed_secs = double(end11 - begin)/ CLOCKS_PER_SEC;
-    std::cout << " ctql2 fuggveny utan: (clock):" << elapsed_secs << std::endl;
     if (lf != 0) {
         return;
     }

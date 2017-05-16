@@ -44,8 +44,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   Recent edit history:
 
   10.07.1999 gL:
-    started to add some Fermi surface functionality... this isn't
-    finished (I don't have time) so it's commented out.
+    Fermi surface functionality parts are incomplete
 
 ******/
 #include "bind.h"
@@ -117,7 +116,7 @@ void gen_total_DOS(detail_type *details,cell_type *cell,long num_orbs,avg_prop_i
   }
 
   fprintf(output_file,"\n### TOTAL DENSITY OF STATES \n");
-  fprintf(output_file,"%d states are present.\n",num_orbs*2);
+  fprintf(output_file,"%ld states are present.\n",num_orbs*2);
   fprintf(output_file,"#BEGIN CURVE\n");
   while(i<tot_num_orbs){
     num_at_this_E = details->K_POINTS[orbital_ordering[i].Kpoint].weight;

@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/toncsi/ClionProjects/parallel (copy)"
+CMAKE_SOURCE_DIR = /home/toncsi/ClionProjects/huckelcode_final
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/toncsi/ClionProjects/parallel (copy)"
+CMAKE_BINARY_DIR = /home/toncsi/ClionProjects/huckelcode_final
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/toncsi/ClionProjects/parallel (copy)/CMakeFiles" "/home/toncsi/ClionProjects/parallel (copy)/CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/toncsi/ClionProjects/huckelcode_final/CMakeFiles /home/toncsi/ClionProjects/huckelcode_final/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/toncsi/ClionProjects/parallel (copy)/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/toncsi/ClionProjects/huckelcode_final/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -1041,32 +1041,32 @@ new3_fileio.cpp.s:
 	$(MAKE) -f CMakeFiles/bind.dir/build.make CMakeFiles/bind.dir/new3_fileio.cpp.s
 .PHONY : new3_fileio.cpp.s
 
-output/marketmatrixwriter.o: output/marketmatrixwriter.cpp.o
+output/MatrixMarketWriter.o: output/MatrixMarketWriter.cpp.o
 
-.PHONY : output/marketmatrixwriter.o
+.PHONY : output/MatrixMarketWriter.o
 
 # target to build an object file
-output/marketmatrixwriter.cpp.o:
-	$(MAKE) -f CMakeFiles/bind.dir/build.make CMakeFiles/bind.dir/output/marketmatrixwriter.cpp.o
-.PHONY : output/marketmatrixwriter.cpp.o
+output/MatrixMarketWriter.cpp.o:
+	$(MAKE) -f CMakeFiles/bind.dir/build.make CMakeFiles/bind.dir/output/MatrixMarketWriter.cpp.o
+.PHONY : output/MatrixMarketWriter.cpp.o
 
-output/marketmatrixwriter.i: output/marketmatrixwriter.cpp.i
+output/MatrixMarketWriter.i: output/MatrixMarketWriter.cpp.i
 
-.PHONY : output/marketmatrixwriter.i
+.PHONY : output/MatrixMarketWriter.i
 
 # target to preprocess a source file
-output/marketmatrixwriter.cpp.i:
-	$(MAKE) -f CMakeFiles/bind.dir/build.make CMakeFiles/bind.dir/output/marketmatrixwriter.cpp.i
-.PHONY : output/marketmatrixwriter.cpp.i
+output/MatrixMarketWriter.cpp.i:
+	$(MAKE) -f CMakeFiles/bind.dir/build.make CMakeFiles/bind.dir/output/MatrixMarketWriter.cpp.i
+.PHONY : output/MatrixMarketWriter.cpp.i
 
-output/marketmatrixwriter.s: output/marketmatrixwriter.cpp.s
+output/MatrixMarketWriter.s: output/MatrixMarketWriter.cpp.s
 
-.PHONY : output/marketmatrixwriter.s
+.PHONY : output/MatrixMarketWriter.s
 
 # target to generate assembly for a file
-output/marketmatrixwriter.cpp.s:
-	$(MAKE) -f CMakeFiles/bind.dir/build.make CMakeFiles/bind.dir/output/marketmatrixwriter.cpp.s
-.PHONY : output/marketmatrixwriter.cpp.s
+output/MatrixMarketWriter.cpp.s:
+	$(MAKE) -f CMakeFiles/bind.dir/build.make CMakeFiles/bind.dir/output/MatrixMarketWriter.cpp.s
+.PHONY : output/MatrixMarketWriter.cpp.s
 
 postprocess.o: postprocess.cpp.o
 
@@ -1422,9 +1422,9 @@ help:
 	@echo "... new3_fileio.o"
 	@echo "... new3_fileio.i"
 	@echo "... new3_fileio.s"
-	@echo "... output/marketmatrixwriter.o"
-	@echo "... output/marketmatrixwriter.i"
-	@echo "... output/marketmatrixwriter.s"
+	@echo "... output/MatrixMarketWriter.o"
+	@echo "... output/MatrixMarketWriter.i"
+	@echo "... output/MatrixMarketWriter.s"
 	@echo "... postprocess.o"
 	@echo "... postprocess.i"
 	@echo "... postprocess.s"

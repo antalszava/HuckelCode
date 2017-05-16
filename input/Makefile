@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/toncsi/ClionProjects/src_input_pdb
+CMAKE_SOURCE_DIR = /home/toncsi/ClionProjects/input_pdb_final
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/toncsi/ClionProjects/src_input_pdb
+CMAKE_BINARY_DIR = /home/toncsi/ClionProjects/input_pdb_final
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/toncsi/ClionProjects/src_input_pdb/CMakeFiles /home/toncsi/ClionProjects/src_input_pdb/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/toncsi/ClionProjects/input_pdb_final/CMakeFiles /home/toncsi/ClionProjects/input_pdb_final/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/toncsi/ClionProjects/src_input_pdb/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/toncsi/ClionProjects/input_pdb_final/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -177,32 +177,32 @@ OpenBabelUtils.cpp.s:
 	$(MAKE) -f CMakeFiles/input_pdb.dir/build.make CMakeFiles/input_pdb.dir/OpenBabelUtils.cpp.s
 .PHONY : OpenBabelUtils.cpp.s
 
-PdbParser.o: PdbParser.cpp.o
+PDBParser.o: PDBParser.cpp.o
 
-.PHONY : PdbParser.o
+.PHONY : PDBParser.o
 
 # target to build an object file
-PdbParser.cpp.o:
-	$(MAKE) -f CMakeFiles/input_pdb.dir/build.make CMakeFiles/input_pdb.dir/PdbParser.cpp.o
-.PHONY : PdbParser.cpp.o
+PDBParser.cpp.o:
+	$(MAKE) -f CMakeFiles/input_pdb.dir/build.make CMakeFiles/input_pdb.dir/PDBParser.cpp.o
+.PHONY : PDBParser.cpp.o
 
-PdbParser.i: PdbParser.cpp.i
+PDBParser.i: PDBParser.cpp.i
 
-.PHONY : PdbParser.i
+.PHONY : PDBParser.i
 
 # target to preprocess a source file
-PdbParser.cpp.i:
-	$(MAKE) -f CMakeFiles/input_pdb.dir/build.make CMakeFiles/input_pdb.dir/PdbParser.cpp.i
-.PHONY : PdbParser.cpp.i
+PDBParser.cpp.i:
+	$(MAKE) -f CMakeFiles/input_pdb.dir/build.make CMakeFiles/input_pdb.dir/PDBParser.cpp.i
+.PHONY : PDBParser.cpp.i
 
-PdbParser.s: PdbParser.cpp.s
+PDBParser.s: PDBParser.cpp.s
 
-.PHONY : PdbParser.s
+.PHONY : PDBParser.s
 
 # target to generate assembly for a file
-PdbParser.cpp.s:
-	$(MAKE) -f CMakeFiles/input_pdb.dir/build.make CMakeFiles/input_pdb.dir/PdbParser.cpp.s
-.PHONY : PdbParser.cpp.s
+PDBParser.cpp.s:
+	$(MAKE) -f CMakeFiles/input_pdb.dir/build.make CMakeFiles/input_pdb.dir/PDBParser.cpp.s
+.PHONY : PDBParser.cpp.s
 
 SettingsParser.o: SettingsParser.cpp.o
 
@@ -273,9 +273,9 @@ help:
 	@echo "... OpenBabelUtils.o"
 	@echo "... OpenBabelUtils.i"
 	@echo "... OpenBabelUtils.s"
-	@echo "... PdbParser.o"
-	@echo "... PdbParser.i"
-	@echo "... PdbParser.s"
+	@echo "... PDBParser.o"
+	@echo "... PDBParser.i"
+	@echo "... PDBParser.s"
 	@echo "... SettingsParser.o"
 	@echo "... SettingsParser.i"
 	@echo "... SettingsParser.s"

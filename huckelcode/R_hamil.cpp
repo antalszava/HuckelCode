@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /****************************************************************************
 *
-*     this file contains stuff for building the R space hamiltonian
+*     These are the functions for building the R space hamiltonian
 *
 *  created:  greg landrum  September 1993
 *

@@ -269,7 +269,7 @@ void allocate_matrices(cell_type *cell,detail_type *details,hermetian_matrix_typ
           FMO_frag->orbital_lookup_table[j] = -1;
         }
       }
-      fprintf(status_file,"Fragment %d has %d atoms and %d orbitals.\n",
+      fprintf(status_file,"Fragment %d has %d atoms and %ld orbitals.\n",
               i+1,FMO_frag->num_atoms,FMO_frag->num_orbs);
 
       /* set the dimensionalities of the matrices needed */

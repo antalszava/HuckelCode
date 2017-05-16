@@ -70,7 +70,7 @@ void build_k_overlap_FAT(cell_type *cell,k_point_type *kpoint,hermetian_matrix_t
                          hermetian_matrix_type overlapK,long num_orbs)
 {
   int i,j,k,l,m;
-  int itab,jtab,ktab;
+  long itab,jtab,ktab;
   int ltab,mtab;
 
   point_type kpointloc;
@@ -209,7 +209,7 @@ void build_k_overlap_THIN(cell_type *cell,detail_type *details,k_point_type *kpo
                           hermetian_matrix_type overlapK,long num_orbs)
 {
   int i,j,k,l,m;
-  int itab,jtab,ktab;
+  long itab,jtab,ktab;
   int ltab,mtab;
 
   point_type kpointloc;
@@ -411,7 +411,7 @@ void build_all_K_overlaps(cell_type *cell,detail_type *details,hermetian_matrix_
   k_point_type *kpoint;
   int which_k;
   int i,j,k,l,m;
-  int itab,jtab,ktab;
+  long itab,jtab,ktab;
   int ltab,mtab;
 
   point_type kpointloc;

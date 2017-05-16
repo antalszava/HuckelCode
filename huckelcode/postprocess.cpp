@@ -75,7 +75,7 @@ void postprocess_FMO(cell_type *cell,detail_type *details,hermetian_matrix_type 
   real *chg_mat;
 
   int i,j,k;
-  int itab,jtab,ktab;
+  long itab,jtab,ktab;
   real tot_chg;
 
 
@@ -269,7 +269,7 @@ void postprocess_FCO(cell_type *cell,detail_type *details,hermetian_matrix_type 
     real *occupations;
     real *chg_mat;
     int i, j, k;
-    int itab, jtab, ktab;
+    long itab, jtab, ktab;
     int test_int;
     real tot_chg;
 
@@ -502,7 +502,7 @@ void postprocess_results(cell_type *cell,detail_type *details,hermetian_matrix_t
   real *occupations;
   real *chg_mat;
   int i,j,k;
-  int itab,jtab,ktab;
+  long itab,jtab,ktab;
   real tot_chg;
 
 

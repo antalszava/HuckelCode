@@ -2,12 +2,10 @@ cmake_minimum_required(VERSION 2.6)
 
 project(yaehmop CXX)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fopenmp")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wno-write-strings -fopenmp")
 
-set(BLAS_DIR /usr/lib/)
-find_package(BLAS REQUIRED)
-set(LAPACK_DIR /usr/lib/)
-find_package(LAPACK REQUIRED)
+set(BLAS_DIR /home/toncsi/Documents/lapack-3.7.0)
+set(LAPACK_DIR /home/toncsi/Documents/lapack-3.7.0)
 
 # Source files
 set(YAEHMOP_SRCS
@@ -16,7 +14,7 @@ set(YAEHMOP_SRCS
         f2c_files/lovlap.cpp
         f2c_files/pow_di.cpp
         f2c_files/pow_ii.cpp
-        output/marketmatrixwriter.cpp
+        output/MatrixMarketWriter.cpp
         bands.cpp
         charge_mat.cpp
         chg_it.cpp
@@ -99,7 +97,7 @@ if(USE_F2C)
     set(YAEHMOP_SRCS
       ${YAEHMOP_SRCS}
       f2c_files/cboris.cpp
-      f2c_files/diag.cpp
+            f2c_files/diag_old.cpp
     )
   endif(NOT USE_BLAS_LAPACK)
 
@@ -196,9 +194,7 @@ endif(USE_BLAS_LAPACK)
 
 if(BUILD_STATIC)
   set(BUILD_SHARED_LIBRARIES OFF)
-  # We are probably going to need to change this if we allow for MSVC
-  # compilation. But we can cross that bridge later - we don't need MSVC
-  # compilation right now.
+  # This might conflict with MSVC compilation
 
   # Apple should not compile with the -static flag
   if(APPLE)

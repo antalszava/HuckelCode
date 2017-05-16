@@ -189,8 +189,13 @@ void error(char *errorstring) {
 
 /* used to deal with interrupts (^C's) */
 void handle_sigint(int a) {
-    fprintf(stderr, "Ack!  You've killed me!\n");
-    fatal("User interrupt.");
+    std::cout << "You pressed Ctrl+C. Would you like to really exit? (Y/N)." << std::endl;
+    std::string decision;
+    std::cin >> decision;
+    if(decision == "Y")
+    {
+        fatal("User interrupted the execution.");
+    }
 }
 
 /*********
@@ -1385,7 +1390,7 @@ void print_MOs(detail_type *details, long num_orbs, eigenset_type eigenset, int 
                 "#end_parms\n");
 
         fprintf(MO_file,
-                "#Num_AOs %d\n", num_orbs);
+                "#Num_AOs %ld\n", num_orbs);
 
 
 /* now write out which MO's are being printed */
@@ -1702,15 +1707,8 @@ void dump_sparse_mat_orig(FILE *file, real *mat, long num_orbs, real cut_off) {
             nonzero_elements_per_row[i]++;
         }
     }
-    fprintf(stderr, "%d of %d hermetian matrix elements were found to be nonzero\n",
+    fprintf(stderr, "%ld of %ld hermetian matrix elements were found to be nonzero\n",
             num_non_zero, num_orbs * num_orbs);
-
-//fprintf(file,"%d\n",num_orbs);
-//fprintf(file,"%d\n",num_non_zero);
-/* write the number of non zero elements per row */
-//for(i=0;i<num_orbs;i++){
-//  fprintf(file,"%d\n",nonzero_elements_per_row[i]);
-//}
 
 /* write the nonzero elements */
     num_written = 0;
@@ -1734,15 +1732,9 @@ void dump_sparse_mat_orig(FILE *file, real *mat, long num_orbs, real cut_off) {
         }
     }
     if (num_written != num_non_zero) {
-        fprintf(stderr, "num_written (%d) doesn't match num_non_zero (%d)\n",
+        fprintf(stderr, "num_written (%ld) doesn't match num_non_zero (%ld)\n",
                 num_written, num_non_zero);
     }
-
-/* now write out the positions of the nonzero elements */
-//for(i=0;i<num_non_zero;i++){
-//  fprintf(file,"%d\n",position_in_row[i]);
-//}
-
     free(position_in_row);
     free(nonzero_elements_per_row);
 }
@@ -1779,19 +1771,19 @@ void dump_sparse_mat_ascii(FILE *file, real *mat, long num_orbs, real cut_off) {
 
 
 void dump_sparse_mat_matrix_market(std::string filename, real cut_off, real *mat, long num_orbs) {
-    MatrixMarketWriter origmatrixmarket(filename,cut_off,mat,num_orbs);
-    origmatrixmarket.setReal();
-    origmatrixmarket.setHermitian();
-    origmatrixmarket.createBinaryFile();
+    MatrixMarketWriter origMatrixMarket(filename,cut_off,mat,num_orbs);
+    origMatrixMarket.setReal();
+    origMatrixMarket.setHermitian();
+    origMatrixMarket.createBinaryFile();
 };
 
 
 
 void dump_sparse_mat(std::string filename, real cut_off, real *mat, long num_orbs) {
-    MatrixMarketWriter onlysparse(filename,cut_off,mat,num_orbs);
-    onlysparse.setReal();
-    onlysparse.setHermitian();
-    onlysparse.createDumpFile();
+    MatrixMarketWriter onlySparse(filename,cut_off,mat,num_orbs);
+    onlySparse.setReal();
+    onlySparse.setHermitian();
+    onlySparse.createDumpFile();
 };
 
 /*

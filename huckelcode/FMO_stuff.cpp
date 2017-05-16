@@ -30,13 +30,13 @@ if( !details->num_FMO_frags || !details->FMO_frags )
 FATAL_BUG("init_FMO_file called when FMO analysis isn't being done.");
 
 fprintf(FMO_file,"# FMO Results\n");
-fprintf(FMO_file,"#Total_number_of_orbitals: %d\n",num_orbs);
+fprintf(FMO_file,"#Total_number_of_orbitals: %ld\n",num_orbs);
 fprintf(FMO_file,"#Number_of_electrons: %lf\n",num_electrons);
 fprintf(FMO_file,"#Number_of_fragments: %d\n",details->num_FMO_frags);
 fprintf(FMO_file,"; number of orbitals and electrons in each fragment.\n");
 
 for(i=0;i<details->num_FMO_frags;i++){
-fprintf(FMO_file,"%d %lf\n",details->FMO_frags[i].num_orbs,
+fprintf(FMO_file,"%ld %lf\n",details->FMO_frags[i].num_orbs,
 details->FMO_frags[i].num_electrons);
 }
 }
@@ -63,7 +63,7 @@ void build_FMO_overlap(detail_type *details,long num_orbs,int num_atoms,
 {
 FMO_frag_type *FMO_frag;
 int i,j;
-int itab,jtab,FMO_itab,FMO_jtab;
+long itab,jtab,FMO_itab,FMO_jtab;
 int begin1,end1,begin2,end2;
 int FMO_begin1,FMO_end1,FMO_begin2,FMO_end2;
 int frag,atom1,atom2;
@@ -143,7 +143,7 @@ void build_FMO_hamil(detail_type *details,long num_orbs,int num_atoms,
 {
 FMO_frag_type *FMO_frag;
 int i,j;
-int itab,jtab,FMO_itab,FMO_jtab;
+long itab,jtab,FMO_itab,FMO_jtab;
 int begin1,end1,begin2,end2;
 int FMO_begin1,FMO_end1,FMO_begin2,FMO_end2;
 int frag,atom1,atom2;
@@ -468,7 +468,7 @@ void gen_FMO_tform_matrices(detail_type *details)
 FMO_frag_type *FMO_frag;
 real *matR, *matI;
 int frag,i,j,k;
-int itab,jtab;
+long itab,jtab;
 int num_frags;
 
 if( !details->num_FMO_frags ) num_frags = details->num_FCO_frags;
@@ -573,7 +573,7 @@ FMO_frag_type *FMO_frag;
 
 long num_orbs_this_frag;
 int frag,atom1,atom2,i,j,k;
-int itab,FMO_itab;
+long itab,FMO_itab;
 int jtab,FMO_jtab;
 int ktab,FMO_ktab;
 int begin1,end1,FMO_begin1,FMO_end1;
@@ -703,7 +703,7 @@ FMO_frag_type *FMO_frag;
 
 long num_orbs_this_frag;
 int frag,atom1,atom2,i,j,k;
-int itab,FMO_itab;
+long itab,FMO_itab;
 int jtab,FMO_jtab;
 int ktab,FMO_ktab;
 int begin1,end1,FMO_begin1,FMO_end1;
@@ -881,7 +881,7 @@ FMO_frag_type *FMO_frag;
 
 long num_orbs_this_frag;
 int frag,atom1,atom2,i,j,k;
-int itab,FMO_itab;
+long itab,FMO_itab;
 int jtab,FMO_jtab;
 int ktab,FMO_ktab;
 int begin1,end1,FMO_begin1,FMO_end1;

@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /****************************************************************************
 *
-*     this is the stuff for doing transformations of atoms/vectors/etc.
+*    These are the functions for doing transformations of atoms/vectors/etc.
 *
 *  created:  greg landrum  February 1994
 *

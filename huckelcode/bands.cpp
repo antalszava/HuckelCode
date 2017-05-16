@@ -196,7 +196,7 @@ bands->num_special_points);
 fprintf(band_file,"%d k points connecting them. There are\n",
 bands->points_per_line);
 
-fprintf(band_file,"%d orbitals in the unit cell.\n",num_orbs);
+fprintf(band_file,"%ld orbitals in the unit cell.\n",num_orbs);
 
 for(i=0;i<bands->num_special_points;i++){
 fprintf(band_file,"%s %lf %lf %lf\n",

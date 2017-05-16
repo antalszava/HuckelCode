@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /****************************************************************************
 *
-*   This is the stuff required to find the inertia tensor and its principle
+*   These are the functions required to find the inertia tensor and its principle
 *    axes.
 *
 *  NOTE: in order to avoid having to write my own matrix diagonalization code

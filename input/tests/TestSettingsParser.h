@@ -18,7 +18,7 @@ public:
     void writeSettings(std::string outputFileName) {objectToBeTested->writeSettings(outputFileName);}
 
     void readSettingsSuccessPropsNotEmpty();
-    void writeSettingsSuccessFileNotempty();
+    void writeSettingsSuccessFileNotEmpty();
 };
 
 

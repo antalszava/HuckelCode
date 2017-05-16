@@ -117,7 +117,7 @@ void check_nn_contacts(cell_type *cell,detail_type *details)
 {
   int num_atoms;
   int i,j;
-  int itab,jtab;
+  long itab,jtab;
   point_type vect,cell_dim[3];
   char *symbols;
   int num_so_far;

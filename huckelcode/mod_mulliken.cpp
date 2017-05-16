@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /****************************************************************************
 *
-*   This is the stuff for doing modified Mulliken analysis
+*   These are the functions for doing modified Mulliken analysis
 *
 *  created:  greg landrum  April 1996
 *
@@ -85,7 +85,7 @@ void modified_mulliken(cell_type *cell,eigenset_type eigenset,hermetian_matrix_t
 {
   int num_atoms;
   int i,j,k;
-  int itab,jtab,ktab;
+  long itab,jtab,ktab;
   int begin_of_atom,end_of_atom;
   real OP_accum,net_chg,tot_chg;
   real OP_accumI;

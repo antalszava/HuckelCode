@@ -83,11 +83,12 @@ public:
   int keep(const Line_format& line_format,const std::string& line,Occupancy_handler& occupancy){
 
     if (line_format.record_type()==PDB::ATOM || line_format.record_type()==PDB::HETATM) {
-        if(first)
+        int keepResult = occupancy.add_or_postpone(line_format, line, 1);
+        if(first && keepResult!=-1)
         {
             ++nblines;
         }
-        return occupancy.add_or_postpone(line_format, line, 1);
+        return keepResult;
     }
     if (line_format.record_type()==PDB::MODEL)
     {

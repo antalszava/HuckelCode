@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     TestPdbParser testPdbParserObject;
     testPdbParserObject.buildUp(samplePDBFileName,"somemolecule");
 
-    //After parsing the PDB file, checking if the .yah file was created
+    //After parsing the PDB file, checking if the .yah file was created and is non-empty
     testPdbParserObject.convert();
     testPdbParserObject.readSuccessFileExists();
     testPdbParserObject.readSuccessFileNotempty();
@@ -60,8 +60,9 @@ int main(int argc, char** argv)
 
     //Testing if file was created in the process of appending
     testSettingsParserObject.writeSettings(sampleOutputFileName);
-    testSettingsParserObject.writeSettingsSuccessFileNotempty();
+    testSettingsParserObject.writeSettingsSuccessFileNotEmpty();
     testSettingsParserObject.tearDown(sampleConfigFileName,sampleOutputFileName);
 
+    std::cout << "Tests were successful" << std::endl;
     return EXIT_SUCCESS;
 }

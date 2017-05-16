@@ -1,7 +1,3 @@
-//
-// Created by toncsi on 2017.03.01..
-//
-
 #ifndef INPUT_PROPERTIES_SETTINGSPARSER_H
 #define INPUT_PROPERTIES_SETTINGSPARSER_H
 
@@ -13,18 +9,22 @@
 class SettingsParser {
     std::map<std::string, std::string>& properties;
     std::string configFileName;
-    std::string inputFilename;
+private:
     std::string inputMolecule;
 public:
-    SettingsParser(std::string inFileName, std::string configFileName, std::map<std::string, std::string>& props) :
-            inputFilename(inFileName), configFileName(configFileName), properties(props) {}
+    SettingsParser(std::string configFileName, std::map<std::string, std::string>& props) :
+            configFileName(configFileName), properties(props) {}
     ~SettingsParser() {}
-    void read_settings();
-    void write_settings(std::string outputFileName);
+
+    //Gets the settings specified in the configuration file
+    int readSettings();
+
+    //Writes the settings based on the data previously obtained from the configuration file
+    int writeSettings(std::string outputFileName);
 
     const std::string &getInputMolecule() const;
-    const std::string &getInputFilename() const;
-
+    bool getIsPropsEmpty() {return properties.empty();}
+    const std::string &getConfigFileName() const;
 };
 
 

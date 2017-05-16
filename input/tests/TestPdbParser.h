@@ -1,11 +1,11 @@
 #ifndef INPUT_PDB_TESTPDBPARSER_H
 #define INPUT_PDB_TESTPDBPARSER_H
 
-#include "../PdbParser.h"
+#include "../PDBParser.h"
 
 class TestPdbParser {
 private:
-    PdbParser* objectToBeTested;
+    PDBParser* objectToBeTested;
     std::ifstream fileChecker;
 public:
 

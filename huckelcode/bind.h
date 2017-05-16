@@ -106,7 +106,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <unistd.h>
 #endif
 
-#include "output/marketmatrixwriter.h"
+#include "output/MatrixMarketWriter.h"
 
 /******  defines  ********/
 
@@ -114,14 +114,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NONFATAL_BUG(__a__) nonfatal_bug((__a__), __FILE__, __LINE__)
 
 #define VERSION_STRING "3.0"
-
-/********
-  The program will compile to use doubles instead of reals to represent
-everything.
-  If for some reason you want to use reals, then you must put -DUSE_FLOATS in
-the
-  CFLAGS field of the makefile
-*********/
 
 //Declaring basic types
 
@@ -285,9 +277,6 @@ typedef struct { real r, i; } complex;
 
 ********/
 #ifdef UNDERSCORE_FORTRAN
-/*#define abfns abfns_
-#define lovlap lovlap_
-#define cboris cboris_*/
 #define zhegv zhegv_
 #define zheev zheev_
 #endif
@@ -780,6 +769,9 @@ typedef struct {
 
   /* for dumping sparse matrix files */
   BOOLEAN dump_sparse_mats;
+
+    /* for dumping sparse matrix files in MatrixMarket format */
+    BOOLEAN dump_sparse_mm_mats;
 
   /* for dumping the distance matrix (for find_coops) */
   BOOLEAN dump_dist_mat;

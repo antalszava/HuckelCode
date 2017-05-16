@@ -1,7 +1,3 @@
-//
-// Created by toncsi on 2017.05.01..
-//
-
 #ifndef INPUT_PDB_OPENBABELUTILS_H
 #define INPUT_PDB_OPENBABELUTILS_H
 
@@ -15,6 +11,7 @@
 class OpenBabelUtils {
 private:
     std::string inputFileName;
+private:
     std::string outputFileName;
 
     std::string inputFileFormat;
@@ -30,8 +27,15 @@ public:
     int initOutPutFile(std::string filename);
     void obtainInputFileFormat();
 
-    const std::string &getPdbFileName() const;
+    void closeInputFile() {inputFile.close();}
+    void closeOutputFile() {outputFile.close();}
 
+    bool getIsInputOpen() {return inputFile.is_open();}
+    bool getIsOutputOpen() {return inputFile.is_open();}
+
+    const std::string &getPdbFileName() const;
+    const std::string &getInputFileName() const;
+    const std::string &getOutputFileName() const;
 };
 
 

@@ -55,8 +55,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * Action:  This just forms the k space hamiltonian for this point:
  *
  *     Hij(K) = Hij(R)*Sij(K)
- *     Hii(K) = Hii(R)(7/3 + 1.75*Sii(K))  <- I don't know what the hell this
- *                                            is all about.
+ *     Hii(K) = Hii(R)(7/3 + 1.75*Sii(K))
  *
  *
  ****************************************************************************/
@@ -64,7 +63,7 @@ void build_k_hamil_FAT(cell_type *,hermetian_matrix_type hamilR,
                        hermetian_matrix_type hamilK,hermetian_matrix_type overlapK,long num_orbs)
 {
   int i,j;
-  int itab,jtab;
+  long itab,jtab;
 
   for(i=0;i<num_orbs;i++){
     itab = i*num_orbs;
@@ -107,15 +106,15 @@ printmat(hamilK.mat,num_orbs,num_orbs,output_file,1e-6,details->line_width);
  *  This is the same as the FAT version (above) but the off diagonal
  *   H(R) elements must be generated....
  *
- *  unless I'm very confused, the time spent here is gonna be TOTALLY
- *    insignificant in terms of the diagonalization and building S(K).
+ *  the time spent here is likely to be insignificant in terms of the
+ *  diagonalization and building S(K).
  *
  ****************************************************************************/
 void build_k_hamil_THIN(cell_type *cell,hermetian_matrix_type hamilR,hermetian_matrix_type hamilK,
                         hermetian_matrix_type overlapK,long num_orbs)
 {
-  int i,j;
-  int itab,jtab;
+  long i,j;
+  long itab,jtab;
   real temp,temp2;
 
   hamilK.mat[0] = hamilR.mat[0]*(1-THE_CONST+THE_CONST*overlapK.mat[0]);

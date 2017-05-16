@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /****************************************************************************
 *
-*   This is the stuff for doing self consistent zeta modifications
+*   These are the functions for doing self consistent zeta modifications
 *
 *  created:  greg landrum  January 1994
 *

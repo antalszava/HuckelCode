@@ -57,8 +57,6 @@ int abfns(real *a, real *b, real *sk1, real *sk2, real *rr,
 
 /*       modified by greg in modernity (august 1993) so that it doesn't us
 e that*/
-/*         damn common block any more. */
-
 /*  *                                                                  *
 */
 /*  ********************************************************************

@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /********************************************************************************
 *
-*     this file contains stuff for evaluating overlaps
+*     This file contains data for evaluating overlaps
 *
 *  created:  greg landrum  August 1993
 *
@@ -60,17 +60,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
 * Returns: none
 *
-* Action:  does whatever MOV did in the original program
-*
-*   comments will follow the clue when I get one
+* Action:  tends to the tasks MOV did in the original program
 *
 ********************************************************************************/
 
-/*extern "C"
-{
-int abfns(real *a, real *b, real *sk1, real *sk2, real *rr,
-          int *l1, int *l2, int *m, int *n1, int *n2, int *maxcal);
-}*/
 
 void mov(real *sigma,real *pi,real *delta,real *phi,int which1,int which2,real dist,int q_num1,int q_num2,
          int l1,int l2,atom_type *atoms)

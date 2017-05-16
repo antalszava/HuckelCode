@@ -4,14 +4,14 @@
 
 #include <iostream>
 #include <assert.h>
-#include "TestMarketMatrixWriter.h"
+#include "TestMatrixMarketWriter.h"
 
 int main()
 {
     std::string sampleOutputFileName = "someoutput.bin";
 
-    //Testing MarketMatrixWriter class without using cutoff value
-    TestMarketMatrixWriter testObject;
+    //Testing MatrixMarketWriter class without using cutoff value
+    TestMatrixMarketWriter testObject;
     testObject.buildUp(sampleOutputFileName);
 
     //Creating output binary file and checking if the file was not left empty
@@ -29,8 +29,7 @@ int main()
 
     testObject.tearDown(sampleOutputFileName);
 
-    //Repeating previous tests for MarketMatrixWriter class with cutoff value
-
+    //Repeating previous tests for MatrixMarketWriter class with cutoff value
     testObject.buildUp(sampleOutputFileName,0.5);
 
     testObject.createBinaryFile();
@@ -43,7 +42,7 @@ int main()
     testObject.writeSuccessFileNotempty();
 
     testObject.tearDown(sampleOutputFileName);
+    std::cout << "Tests were successful!" << std::endl;
     return 0;
-
 }
 

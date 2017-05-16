@@ -352,7 +352,7 @@ void eval_mulliken(cell_type *cell,eigenset_type eigenset,hermetian_matrix_type 
 {
   int num_atoms;
   int i,j,k;
-  int itab,jtab,ktab;
+  long itab,jtab,ktab;
   int begin_of_atom,end_of_atom;
   real OP_accum,net_chg,tot_chg;
   real OP_accumI;

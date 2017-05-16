@@ -19,10 +19,11 @@ void TestSettingsParser::readSettingsSuccessPropsNotEmpty()
     assert(!objectToBeTested->getIsPropsEmpty());
 }
 
-void TestSettingsParser::writeSettingsSuccessFileNotempty()
+void TestSettingsParser::writeSettingsSuccessFileNotEmpty()
 {
     fileChecker.open(objectToBeTested->getConfigFileName());
     assert(fileChecker.peek() != std::ifstream::traits_type::eof());
+    fileChecker.close();
 }
 
 void TestSettingsParser::tearDown(std::string fileName1,std::string fileName2)

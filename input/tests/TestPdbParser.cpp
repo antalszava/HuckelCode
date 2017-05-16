@@ -3,7 +3,7 @@
 
 void TestPdbParser::buildUp(std::string filename, std::string molecule)
 {
-    objectToBeTested = new PdbParser(filename, molecule);
+    objectToBeTested = new PDBParser(filename, molecule);
 
     std::ofstream tempOutFile(filename);
 
@@ -22,22 +22,23 @@ void TestPdbParser::readSuccessFileExists()
 {
     fileChecker.open(objectToBeTested->getOutputFileName());
     assert(fileChecker.is_open());
+    fileChecker.close();
 }
 
 void TestPdbParser::readSuccessFileNotempty()
 {
+    fileChecker.open(objectToBeTested->getOutputFileName());
     assert(fileChecker.peek() != std::ifstream::traits_type::eof());
+    fileChecker.close();
 }
 
 void TestPdbParser::tearDown(std::string fileName)
 {
-
     auto const pos = fileName.find_last_of('.');
     std::string tempFileName = fileName.substr(0,pos);
     tempFileName.append(".yah");
 
     remove(tempFileName.c_str());
     remove(fileName.c_str());
-    fileChecker.close();
     delete objectToBeTested;
 }

@@ -750,7 +750,7 @@ void store_avg_prop_info(detail_type *details,int which_k,eigenset_type eigenset
                          long num_orbs, real *chg_mat,avg_prop_info_type *avg_prop_info)
 {
   int i,j;
-  int itab,jtab;
+  long itab,jtab;
   avg_prop_info_type *temp_ptr;
 
   /* use temp_ptr to save us from TOO much pointer math */
@@ -839,7 +839,7 @@ int sort_energies_helper(const void *orb1,const void *orb2)
 void sort_avg_prop_info(detail_type *details,long num_orbs,avg_prop_info_type *avg_prop_info,K_orb_ptr_type *orbital_ordering)
 {
   int i,j;
-  int itab;
+  long itab;
   int num_so_far,num_elements;
 
   num_elements = details->num_KPOINTS * num_orbs;
@@ -874,7 +874,7 @@ void sort_avg_prop_info(detail_type *details,long num_orbs,avg_prop_info_type *a
 
   /********
 
-    Now sort it using C's built in quick sort function.
+    Changed the previously C built in quick sort function to that of the C++ standard library
 
   *********/
   std::qsort((void *)orbital_ordering,num_elements,sizeof(K_orb_ptr_type),

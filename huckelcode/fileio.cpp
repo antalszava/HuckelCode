@@ -44,12 +44,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       on the next line.  This is a quick "solution" which should be
       helped along by some more sophisticated parsing of the projections.
   07.07.99: gL
-    - fixed up the stupid problem with charges not being filled in when
+    - fixed up the problem with charges not being filled in when
       the charge keyword appeared below the parameters specification of
       an input file.
-    - added some anal-retentive changes to string dimensioning as insurance.
-      This is almost 100% guaranteed to be unnecessary, but the changes were
-      trivial.
+    - added some anal-retentive changes to string dimensioning as insurance
 ***/
 
 #include "bind.h"
@@ -1445,7 +1443,7 @@ read_inputfile(cell_type *cell, detail_type *details, char *name, long *num_orbs
     char found, got_params, got_muller_params, placed, done;
     char Zmat;
     int i, j, k;
-    int itab, temp, found_end;
+    long itab, temp, found_end;
     int which, foo_int, tot_num_so_far;
     int num_COOPS;
     COOP_type *COOP_ptr, *new_COOP;
@@ -2367,6 +2365,8 @@ calculation.\n");
             details->dump_overlap = 1;
         } else if (strstr(instring, "DUMP SPARSE")) {
             details->dump_sparse_mats = 1;
+        } else if (strstr(instring, "DUMP MATRIX MARKET")) {
+            details->dump_sparse_mm_mats = 1;
         } else if (strstr(instring, "DUMP DIST")) {
             details->dump_dist_mat = 1;
         }

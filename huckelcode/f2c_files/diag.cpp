@@ -3,8 +3,9 @@
         -lf2c -lm   (in that order)
 */
 
-#include <iostream>
 #include <omp.h>
+#include <iostream>
+#include <vector>
 #include "f2c.h"
 
 extern double beginMP;
@@ -16,19 +17,6 @@ extern int ctred2(int *n, int *nd, real *a, real *b,
 extern int ctql2(int *n, int *nd, real *d, real *e,
                  real *f,real *a,real *b,int *fail);
 extern double d_sign(double a,double b);
-
-
-int cchol(int *n, int *nd, real *a, int *fail)
-{
-    /* System generated locals */
-    int a_dim1, a_offset, i__1, i__2, i__3;
-
-    /* Builtin functions */
-
-    /* Local variables */
-
-    int i, j, k, ia, ka;
-
 
 /* SUBROUTINE CCHOL COMPUTES CHOLESKI */
 /* DECOMPOSITION OF GIVEN COMPLEX POSITIVE DEFINITE */
@@ -61,11 +49,20 @@ int cchol(int *n, int *nd, real *a, int *fail)
 /*           SUCCESFUL AND TO NONZERO IF */
 /*           THE MATRIX WAS NOT POSITIVE DEFINITE. */
 
-
 /*    PROGRAMMED BY E. ZAKRAJSEK */
 /*     JUNE 20, 1974 */
 
 
+
+//Refactoring was carried out, original contained GOTO language constructs
+int cchol(int *n, int *nd, real *a, int *fail)
+{
+    /* System generated locals */
+    int a_dim1, a_offset, i__1, i__2, i__3;
+
+    /* Local variables */
+
+    int ia, ka;
 
 /*     SUPPOSE DECOMPOSITION WILL FAIL */
 
@@ -78,59 +75,70 @@ int cchol(int *n, int *nd, real *a, int *fail)
     *fail = 1;
 
     i__1 = *n;
-    for (i = 1; i <= i__1; ++i) {
 
-/*     TEST FOR POSITIVE DEFINITNESS */
-
+    /*     TEST FOR POSITIVE DEFINITNESS */
+    bool notposdef = false;
+    for (int i = 1; i <= i__1; ++i) {
         if (a[i + i * a_dim1] <= 0.) {
-            return 0;
+            notposdef=true;
         }
-
-/*      COMPUTE COLUMN I */
-
-        a[i + i * a_dim1] = (double)std::sqrt((double)a[i + i * a_dim1]);
-        if (i == *n) {
-            goto L13;
-        }
-        ia = i + 1;
-        i__2 = *n;
-        for (j = ia; j <= i__2; ++j) {
-            a[j + i * a_dim1] /= a[i + i * a_dim1];
-/* L10: */
-            a[i + j * a_dim1] /= a[i + i * a_dim1];
-        }
-
-/*     REDUCE REMAINING COLUMNS */
-
-        i__2 = *n;
-        for (k = ia; k <= i__2; ++k) {
-            a[k + k * a_dim1] = a[k + k * a_dim1] - a[k + i * a_dim1] * a[k +
-                                                                          i * a_dim1] - a[i + k * a_dim1] * a[i + k * a_dim1];
-            if (k == *n) {
-                goto L12;
-            }
-            ka = k + 1;
-            i__3 = *n;
-            for (j = ka; j <= i__3; ++j) {
-                a[j + k * a_dim1] = a[j + k * a_dim1] - a[j + i * a_dim1] * a[
-                        k + i * a_dim1] - a[i + j * a_dim1] * a[i + k *
-                                                                    a_dim1];
-/* L11: */
-                a[k + j * a_dim1] = a[k + j * a_dim1] - a[i + j * a_dim1] * a[
-                        k + i * a_dim1] + a[j + i * a_dim1] * a[i + k *
-                                                                    a_dim1];
-            }
-            L12:
-            ;
-        }
-        L13:
-        ;
     }
+    if(notposdef)
+        return 0;
+
+
+
+        /*      COMPUTE COLUMN I */
+        for (int i = 1; i <= i__1; ++i) {
+            a[i + i * a_dim1] = (double) std::sqrt((double) a[i + i * a_dim1]);
+        }
+
+
+        //i cannot be equal to i__1, previously achieved with goto
+        for (int i = 1; i < i__1; ++i) {
+            for (int j = i + 1; j <= i__1; ++j) { //2-4596
+                a[j + i * a_dim1] /= a[i + i * a_dim1];
+                a[i + j * a_dim1] /= a[i + i * a_dim1];
+            }
+        }
+
+        /*     REDUCE REMAINING COLUMNS */
+        for (int i = 1; i < i__1; ++i) {
+            //#pragma omp for
+            for (int k = ia; k <= i__1; ++k) {
+                a[k + k * a_dim1] = a[k + k * a_dim1] - a[k + i * a_dim1] *
+                                                        a[k + i * a_dim1] - a[i + k * a_dim1] * a[i + k * a_dim1];
+            }
+        }
+
+        for (int i = 1; i < i__1; ++i) {
+            int ia = i + 1;
+            for (int k = ia; k < i__1; ++k) { //k cannot be equal to i__1, previously achieved with goto
+                int ka = k + 1;
+                for (int j = ka; j <= i__1; ++j) {
+                    a[j + k * a_dim1] = a[j + k * a_dim1] - a[j + i * a_dim1] * a[
+                            k + i * a_dim1] - a[i + j * a_dim1] * a[i + k *
+                                                                        a_dim1];
+                }
+            }
+        }
+        for (int i = 1; i < i__1; ++i) {
+            int ia = i + 1;
+            for (int k = ia; k < i__1; ++k) { //k cannot be equal to i__1, previously achieved with goto
+                int ka = k + 1;
+                for (int j = ka; j <= i__1; ++j) {
+                    a[k + j * a_dim1] = a[k + j * a_dim1] - a[i + j * a_dim1] * a[
+                            k + i * a_dim1] + a[j + i * a_dim1] * a[i + k *
+                                                                        a_dim1];
+                }
+            }
+        }
+
     *fail = 0;
     return 0;
-} /* cchol */
+}
 
-/* Subroutine */ int ctred2(int *n, int *nd, real *a, real *b, real *d, real *e, real *f)
+int ctred2(int *n, int *nd, real *a, real *b, real *d, real *e, real *f)
 {
     /* System generated locals */
     int a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
@@ -205,8 +213,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
 /*     COMPUTE NORM */
 
         all = 0.;
-        i__2 = *n;
-        for (i = k; i <= i__2; ++i) {
+        for (i = k; i <= i__1; ++i) {
 /* L10: */
             all = all + a[i + l * a_dim1] * a[i + l * a_dim1] + a[l + i *
                                                                       a_dim1] * a[l + i * a_dim1];
@@ -251,8 +258,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
 /*     AND STORE INTO (E,F) */
 
         t = 0.;
-        i__2 = *n;
-        for (i = k; i <= i__2; ++i) {
+        for (i = k; i <= i__1; ++i) {
             c = a[i + i * a_dim1] * a[i + l * a_dim1];
             s = a[i + i * a_dim1] * a[l + i * a_dim1];
             if (i == k) {
@@ -272,8 +278,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
                 goto L15;
             }
             ia = i + 1;
-            i__3 = *n;
-            for (j = ia; j <= i__3; ++j) {
+            for (j = ia; j <= i__1; ++j) {
                 c = c + a[j + i * a_dim1] * a[j + l * a_dim1] + a[i + j *
                                                                       a_dim1] * a[l + j * a_dim1];
 /* L14: */
@@ -289,9 +294,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
         t *= g * g;
 
 /*    TRANSFORM  MATRIX */
-
-        i__2 = *n;
-        for (i = k; i <= i__2; ++i) {
+        for (i = k; i <= i__1; ++i) {
             a[i + i * a_dim1] = a[i + i * a_dim1] - (a[i + l * a_dim1] * e[i]
                                                      + a[l + i * a_dim1] * f[i]) * 2. + t * (a[i + l * a_dim1]
                                                                                              * a[i + l * a_dim1] + a[l + i * a_dim1] * a[l + i *
@@ -351,12 +354,10 @@ int cchol(int *n, int *nd, real *a, int *fail)
 
 /*     COMPUTE PRODUCT */
 
-        i__2 = *n;
-        for (j = k; j <= i__2; ++j) {
+        for (j = k; j <= i__1; ++j) {
             c = 0.;
             s = 0.;
-            i__3 = *n;
-            for (i = k; i <= i__3; ++i) {
+            for (i = k; i <= i__1; ++i) {
                 c = c + a[i + l * a_dim1] * a[i + j * a_dim1] + a[l + i *
                                                                       a_dim1] * b[i + j * b_dim1];
 /* L33: */
@@ -365,8 +366,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
             }
             c *= a[l + l * a_dim1];
             s *= a[l + l * a_dim1];
-            i__3 = *n;
-            for (i = k; i <= i__3; ++i) {
+            for (i = k; i <= i__1; ++i) {
                 a[i + j * a_dim1] = a[i + j * a_dim1] - c * a[i + l * a_dim1]
                                     + s * a[l + i * a_dim1];
 /* L34: */
@@ -379,8 +379,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
 /*     MAKE NEW LINE */
 
         L36:
-        i__2 = *n;
-        for (i = k; i <= i__2; ++i) {
+        for (i = k; i <= i__1; ++i) {
             a[i + l * a_dim1] = 0.;
             a[l + i * a_dim1] = 0.;
             b[i + l * b_dim1] = 0.;
@@ -489,9 +488,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
         s = f[k] / r;
 
 /*     ACCUMULATE ROTATION */
-
-        i__2 = *n;
-        for (i = 1; i <= i__2; ++i) {
+        for (i = 1; i <= i__1; ++i) {
             p = a[i + k * a_dim1] * c - b[i + k * b_dim1] * s;
             b[i + k * b_dim1] = a[i + k * a_dim1] * s + b[i + k * b_dim1] * c;
 /* L10: */
@@ -530,9 +527,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
         }
 
 /*     LOOK FOR SMALL SUBDIAGONAL ELEMENT */
-
-        i__2 = *n;
-        for (m = l; m <= i__2; ++m) {
+        for (m = l; m <= i__1; ++m) {
             if ((d__1 = e[m], std::fabs(d__1)) <= bb) {
                 goto L21;
             }
@@ -557,8 +552,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
         r = std::sqrt((double)(p * p + 1.));
         h = d[l] - e[l] / (p + d_sign(r, p));
 
-        i__2 = *n;
-        for (i = l; i <= i__2; ++i) {
+        for (i = l; i <= i__1; ++i) {
 /* L25: */
             d[i] -= h;
         }
@@ -600,9 +594,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
             d[i1] = h + s * (c * g + s * d[i]);
 
 /*     FORM VECTOR */
-
-            i__3 = *n;
-            for (k = 1; k <= i__3; ++k) {
+            for (k = 1; k <= i__1; ++k) {
                 hr = a[k + i1 * a_dim1];
                 hi = b[k + i1 * b_dim1];
                 a[k + i1 * a_dim1] = s * a[k + i * a_dim1] + c * hr;
@@ -633,8 +625,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
     i__1 = *n;
     for (i = 1; i <= i__1; ++i) {
         k = i;
-        i__2 = *n;
-        for (j = i; j <= i__2; ++j) {
+        for (j = i; j <= i__1; ++j) {
             if (d[j] < d[k]) {
                 k = j;
             }
@@ -649,8 +640,7 @@ int cchol(int *n, int *nd, real *a, int *fail)
         d[i] = d[k];
         d[k] = p;
 
-        i__2 = *n;
-        for (j = 1; j <= i__2; ++j) {
+        for (j = 1; j <= i__1; ++j) {
             p = a[j + i * a_dim1];
             a[j + i * a_dim1] = a[j + k * a_dim1];
             a[j + k * a_dim1] = p;
@@ -666,3 +656,5 @@ int cchol(int *n, int *nd, real *a, int *fail)
     *fail = 0;
     return 0;
 } /* ctql2 */
+
+

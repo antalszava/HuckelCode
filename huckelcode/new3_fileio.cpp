@@ -25,7 +25,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /****************************************************************************
 *
-*     this file contains stuff for dealing with file input from NEW3's twisted
+*     this file contains functions for dealing with file input from NEW3's twisted
 *      input files.
 *
 *  created:  greg landrum  January 1993

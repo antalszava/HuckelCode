@@ -122,7 +122,8 @@ extern void calc_avg_OP
 PROTO((detail_type *, cell_type *, long num_orbs, K_orb_ptr_type *, avg_prop_info_type *,
        hermetian_matrix_type, prop_type));
 extern void find_crystal_occupations
-PROTO((detail_type *, real, long num_orbs, K_orb_ptr_type *, real *));
+PROTO((detail_type *details,real electrons_per_cell,long num_orbs,
+        K_orb_ptr_type *orbital_ordering,real *Fermi_E));
 extern void store_avg_prop_info
 PROTO((detail_type *, int, eigenset_type, hermetian_matrix_type, long num_orbs, real *,
        avg_prop_info_type *));
@@ -173,7 +174,8 @@ extern void print_labelled_mat
 PROTO((real *, int, int, FILE *, real, atom_type *, int, int *, long num_orbs, char, char,
        int));
 extern void print_sym_mat
-PROTO((real *, int, int, FILE *, char *, char *, int));
+PROTO((double *mat, int num_row, int num_col, FILE *outfile, char *legend,
+        char *titles, int width));
 extern int skipcomments PROTO((FILE *, char *, char));
 extern void find_atoms_orbs PROTO((long num_orbs, int, int, int *, int *, int *));
 extern int overlap_tab_from_vect PROTO((point_type *, cell_type *));
@@ -369,23 +371,13 @@ extern void cboris(int *n,int *nd,real *a,real *b,real *c,real *d,
                     real *e,real *f, int *fail);
 
 extern"C" {
-long zhegv_ PROTO((long * itype, char * jobz, char * uplo, long * n, complex * a,
+long zhegv PROTO((long * itype, char * jobz, char * uplo, long * n, complex * a,
         long * lda, complex * b, long * ldb, real * w,
         complex * work, long * lwork, real * rwork, long * info));
-long zheev_ PROTO((char * jobz, char * uplo, long * n, complex * a,
+long zheev PROTO((char * jobz, char * uplo, long * n, complex * a,
         long  * lda, real * w, complex * work,
         long * lwork, real * rwork, long * info));
 }
-
-/*extern"C" {
-extern int zhegv
-        PROTO((int * itype, char *jobz, char *uplo, int *n, complex *a,
-                int *lda, complex *b, int *ldb, real *w,
-                complex *work, int *lwork, real *rwork, int *info));
-extern int zheev PROTO((char *jobz, char *uplo, int *n, complex *a,
-        int *lda, real *w, complex *work,
-        int *lwork, real *rwork, int *info));
-}*/
 
 #ifdef USING_THE_MAC
 extern FILE *choose_mac_file(char *file_name, char);

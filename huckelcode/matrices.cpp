@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /****************************************************************************
 *
-*     this file contains stuff for the overlap matrices in K space
+*     this file contains operations for the overlap matrices in K space
 *
 *  created:  greg landrum  September 1995
 *
@@ -55,7 +55,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ****************************************************************************/
 void sparsify_hermetian_matrix(real value,hermetian_matrix_type mat,long num_orbs)
 {
-  int i,j,itab,jtab;
+  long i,j,itab,jtab;
   int num_zeroed;
   real mag,val_squared;
   real real_part,imag_part;
@@ -84,7 +84,7 @@ void sparsify_hermetian_matrix(real value,hermetian_matrix_type mat,long num_orb
     }
 
   }
-  fprintf(stderr,"\t %d of %d zeroed (%4.2lf%% nonzero)\n",num_zeroed,num_orbs*num_orbs,
+  fprintf(stderr,"\t %d of %ld zeroed (%4.2lf%% nonzero)\n",num_zeroed,num_orbs*num_orbs,
           100.0*((real)(num_orbs*num_orbs)-(real)2*num_zeroed)/(real)(num_orbs*num_orbs));
 }
 
@@ -105,7 +105,7 @@ void sparsify_hermetian_matrix(real value,hermetian_matrix_type mat,long num_orb
 ****************************************************************************/
 void sparsify_matrix(real value,real *mat_R,real *mat_I,long num_orbs)
 {
-  int i,j,itab,jtab;
+  long i,j,itab,jtab;
   int num_zeroed;
   real mag,val_squared;
   real real_part,imag_part;
@@ -132,7 +132,7 @@ void sparsify_matrix(real value,real *mat_R,real *mat_I,long num_orbs)
       }
     }
   }
-  fprintf(stderr,"\t %d of %d zeroed (%4.2lf%% nonzero)\n",num_zeroed,num_orbs*num_orbs,
+  fprintf(stderr,"\t %d of %ld zeroed (%4.2lf%% nonzero)\n",num_zeroed,num_orbs*num_orbs,
           100.0*((real)(num_orbs*num_orbs)-(real)num_zeroed)/(real)(num_orbs*num_orbs));
 }
 

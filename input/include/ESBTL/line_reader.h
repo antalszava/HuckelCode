@@ -66,7 +66,6 @@ class Line_reader{
       int system_index=line_selector.keep(line_format,line,occupancy);
       
       if (system_index!=DISCARD){
-        //TODO warning Put inside selector: we could think of a different policy
         char altloc=line_format.get_alternate_location(line);
         if (altloc!=' '){
           if (default_altloc==' ')
@@ -74,7 +73,6 @@ class Line_reader{
           else
             if (altloc!=default_altloc) continue;
         }
-        
         builder.interpret_line(line_format,line,system_index);
       }
     }
@@ -90,7 +88,6 @@ public:
   Line_reader(Line_selector& line_selector, Builder& builder):line_selector(line_selector),builder(builder),nblines(0){}
   
   //template parameter Occupancy_handler tells what to do with atoms with occupancy !=1 (when no altloc present)
-  //TODO : think of the same think for altloc: when should have that the sum of the occupancy is 1 when considering these atoms!!!!!!
   //       This would be also a way to handle differently altloc and to avoid the update at the end to be sure all altloc selected are the same 
   //occupancy is not const for the moment since it may be used as internal line storage
   /** Reads the line of a file and give instruction to the builder to construct molecular system(s).
@@ -125,7 +122,7 @@ public:
     return read<ASCII>(filename,occupancy,default_altloc);
   }
   
-  
+  int getNumberOfLines(){return nblines;}
 };
 
 /**

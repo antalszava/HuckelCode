@@ -72,8 +72,22 @@ extern FILE *choose_mac_file(char *,char);
 clock_t begin;
 double beginMP;
 
+void signalHandler( int signum ) {
+    std::cout << "Interrupt signal (" << signum << ") received.\n";
+
+    // cleanup and close up stuff here
+    // terminate program
+
+    exit(signum);
+
+}
+
+
 int main(int argc, char **argv)
 {
+    signal(SIGINT, signalHandler);
+
+
     // Time measurement
     begin = clock();
     beginMP = omp_get_wtime();
@@ -132,8 +146,8 @@ int main(int argc, char **argv)
 
     /************
 
-      get space for the atomic data and experimental (numerical experiments!! YES!)
-      parameters...   (and make sure we got it)
+      get space for the atomic data and experimental
+      parameters...
 
     **************/
     unit_cell = (cell_type *) calloc(1, sizeof(cell_type));
@@ -219,8 +233,6 @@ int main(int argc, char **argv)
         else if (unit_cell->using_xtal_coords) eval_xtal_coord_locs(unit_cell, 1);
         if (unit_cell->geom_frags && !details->walsh_details.num_vars)
             process_geom_frags(unit_cell);
-
-        //if (details->use_symmetry) find_sym_ops(details, unit_cell);
     }
 
 
@@ -264,7 +276,7 @@ int main(int argc, char **argv)
 
     ******/
     fprintf(output_file, "\n; Number of orbitals\n");
-    fprintf(output_file, "#Num_Orbitals: %d\n", num_orbs);
+    fprintf(output_file, "#Num_Orbitals: %ld\n", num_orbs);
 
     if (details->orbital_mapping_PRT) {
         fprintf(output_file, "\n; Orbital Mapping\n");
@@ -277,7 +289,7 @@ int main(int argc, char **argv)
     }
     /**********
 
-      now do the calculation (loop over walsh diagram points)
+      Do the calculation (loop over walsh diagram points)
 
       NOTE: this loops always gets executed at least once, since we
         assume that walsh_details.num_steps has been set to 1.
@@ -446,18 +458,12 @@ int main(int argc, char **argv)
 
                   ************/
 
-                clock_t end3 = clock();
-                elapsed_secs = double(end3 - begin) / CLOCKS_PER_SEC;
-                std::cout << "Loop over k points elott: " << elapsed_secs << std::endl;
                 loop_over_k_points(unit_cell, details, Overlap_R, Hamil_R, Overlap_K,
                                    Hamil_K, cmplx_hamil, cmplx_overlap,
                                    eigenset, work1, work2, work3, cmplx_work,
                                    &properties,
                                    avg_prop_info, num_orbs, orbital_lookup_table);
 
-                clock_t end4 = clock();
-                elapsed_secs = double(end4 - begin) / CLOCKS_PER_SEC;
-                std::cout << "Loop over k points utan: " << elapsed_secs << std::endl;
                 if (!details->just_matrices) {
                     /******
 
@@ -586,14 +592,14 @@ int main(int argc, char **argv)
 
                             /*************
 
-                              print out the stuff that will appear at the bottom of the file.
+                              print out the data that will appear at the bottom of the file.
 
                               *************/
 
                             /* Fermi level */
                             fprintf(output_file, "\n;  The Fermi Level was determined for %d K points based on\n",
                                     details->num_KPOINTS);
-                            fprintf(output_file, ";     an ordering of %d crystal orbitals occupied by %lf electrons\n",
+                            fprintf(output_file, ";     an ordering of %ld crystal orbitals occupied by %lf electrons\n",
                                     num_orbs * details->num_KPOINTS, unit_cell->num_electrons);
                             fprintf(output_file, ";      in the unit cell (%lf electrons total)\n",
                                     unit_cell->num_electrons * (real) details->num_KPOINTS);

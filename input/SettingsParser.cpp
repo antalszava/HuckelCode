@@ -1,14 +1,10 @@
-//
-// Created by toncsi on 2017.03.01..
-//
-
 #include <vector>
 #include "SettingsParser.h"
 
-void SettingsParser::read_settings()
+int SettingsParser::readSettings()
 {
-    std::string delimiter = "=";
     std::ifstream input_file(configFileName.c_str());
+    std::string delimiter = "=";
     std::string line;
     if (input_file.good())
     {
@@ -22,22 +18,20 @@ void SettingsParser::read_settings()
             properties[propKey] = propValue;
         }
         input_file.close();
+        return EXIT_SUCCESS;
     }
     else {
-
-        std::string errmsg("File ");
-        errmsg.append(configFileName);
-        errmsg.append(" does not exist.\n");
-        throw std::runtime_error(errmsg);
+        ErrorHandler::noSettingsInputFile(configFileName);
+        return EXIT_FAILURE;
     }
 }
 
-void SettingsParser::write_settings(std::string outputFileName)
+int SettingsParser::writeSettings(std::string outputFileName)
 {
     std::ofstream outputFile;
     outputFile.open(outputFileName, std::fstream::app);
     outputFile << std::endl;
-    outputFile << ";Printiing options" << std::endl;
+    outputFile << ";Printing options" << std::endl;
     outputFile << "Print" << std::endl;
     std::vector<std::string> dumps;
     if (outputFile.is_open())
@@ -52,20 +46,27 @@ void SettingsParser::write_settings(std::string outputFileName)
                 dumps.push_back(item.first);
             }
         }
+        outputFile << "End_Print \n" << std::endl;
+        for(auto const &item : dumps)
+        {
+            outputFile << item << std::endl;
+        }
+        outputFile.close();
+        std::cout << "Successfully created the yah file." << std::endl;
+        return EXIT_SUCCESS;
     }
-    outputFile << "End_Print \n" << std::endl;
-    for(auto const &item : dumps)
+    else
     {
-        outputFile << item << std::endl;
+        ErrorHandler::settingsOutputFileNotOpen(outputFileName);
+        return EXIT_FAILURE;
     }
-    std::cout << "Successfully created the yah file." << std::endl;
-}
-
-const std::string &SettingsParser::getInputFilename() const {
-    return inputFilename;
 }
 
 const std::string &SettingsParser::getInputMolecule() const {
     return inputMolecule;
+}
+
+const std::string &SettingsParser::getConfigFileName() const {
+    return configFileName;
 }
 

@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /****************************************************************************
 *
-*   This is the stuff for dealing with the electrostatic potential terms
+*   These are the functions for dealing with the electrostatic potential terms
 *
 *  created:  greg landrum  January 1994
 *

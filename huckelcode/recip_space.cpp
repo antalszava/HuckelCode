@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /****************************************************************************
 *
-*     this file contains stuff for dealing with reciprocal space,
+*     These are the functions for dealing with reciprocal space,
 *      i.e. calculating reciprocal lattice vectors and automagically
 *      determining k-point sets.
 *

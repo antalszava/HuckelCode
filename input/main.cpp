@@ -1,7 +1,6 @@
 #include "OpenBabelUtils.h"
 #include "SettingsParser.h"
-#include "PdbParser.h"
-#include "ErrorHandler.h"
+#include "PDBParser.h"
 
 int main(int argc, char** argv)
 {
@@ -21,14 +20,23 @@ int main(int argc, char** argv)
 
         //Getting information from properties file
         std::map<std::string, std::string> props;
-        SettingsParser settingsParser{toPdbConversion.getPdbFileName(), argv[2], props};
-        settingsParser.read_settings();
+        SettingsParser settingsParser{argv[2], props};
+        if(settingsParser.readSettings())
+        {
+            return EXIT_FAILURE;
+        }
 
         //Parsing molecule from PDB file
-        PdbParser moleculeParser(settingsParser.getInputFilename(),settingsParser.getInputMolecule());
-        moleculeParser.read();
+        PDBParser moleculeParser(toPdbConversion.getPdbFileName(),settingsParser.getInputMolecule());
+        if(moleculeParser.convert())
+        {
+            return EXIT_FAILURE;
+        }
 
         //Creating outputfile with the parsed molecule and the given properties
-        settingsParser.write_settings(moleculeParser.getOutputFileName());
+        if(settingsParser.writeSettings(moleculeParser.getOutputFileName()))
+        {
+            return EXIT_FAILURE;
+        }
         return EXIT_SUCCESS;
 }

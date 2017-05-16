@@ -312,7 +312,7 @@ void construct_rotn_mats(enum possible_axis axis,real angle,
   }
 }
 
-//Adding enumerator type iteration
+//Adding enumerator type iteration (was supported in the original C version)
 // Special behavior for ++possible_sym_op
 possible_sym_op& operator++( possible_sym_op &c ) {
   using IntType = typename std::underlying_type<possible_sym_op>::type;

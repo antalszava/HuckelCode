@@ -26,7 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /****************************************************************************
 *
-*     this file contains stuff for the overlap matrices in R space
+*     These are the functions for the overlap matrices in R space
 *
 *  created:  greg landrum  August 1993
 *
@@ -881,7 +881,7 @@ void R_space_overlap_matrix(cell_type *cell,detail_type *details,hermetian_matri
 char err_string[240];
 int overlaps_so_far;
 int i,j,k;
-int itab,jtab,ktab;
+long itab,jtab,ktab;
 int overlap_tab;
 
 char found = 0;
